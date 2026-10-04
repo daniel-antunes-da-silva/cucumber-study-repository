@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pageObjects.LandingPage;
 import pageObjects.OfferPage;
+import pageObjects.PageObjectManager;
 import utils.TestContextSetup;
 
 
@@ -33,7 +34,7 @@ public class OfferPageStepDefinition {
     }
 
     public void switchToOfferPage() {
-        testContextSetup.driver.get("https://rahulshettyacademy.com/seleniumPractise/#/offers");
+        this.testContextSetup.genericUtils.SwitchWindowToOfferPage();
     }
 
     @Then("the product name at the offer page is the same in the landing page")

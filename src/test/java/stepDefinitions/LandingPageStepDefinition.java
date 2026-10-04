@@ -7,22 +7,23 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pageObjects.LandingPage;
+import pageObjects.PageObjectManager;
 import utils.TestContextSetup;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class LandingPageStepDefinition {
     TestContextSetup testContextSetup;
+    PageObjectManager pageObjectManager;
     LandingPage landingPage;
 
-    public LandingPageStepDefinition(TestContextSetup testContextSetup, LandingPage landingPage) {
+    public LandingPageStepDefinition(TestContextSetup testContextSetup) {
         this.testContextSetup = testContextSetup;
-        this.landingPage = landingPage;
     }
 
     @Given("User is on GreenCart Landing page")
     public void userIsOnGreenCartLandingPage() {
-        this.testContextSetup.driver.get("https://rahulshettyacademy.com/seleniumPractise/#/");
+        landingPage = this.testContextSetup.pageObjectManager.getLandingPage();
     }
 
     @When("user searched with shortname {string} and extracted actual name of product")
