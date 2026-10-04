@@ -6,6 +6,8 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import pageObjects.LandingPage;
+import pageObjects.OfferPage;
 import utils.TestContextSetup;
 
 
@@ -15,18 +17,23 @@ import static org.testng.Assert.assertTrue;
 public class OfferPageStepDefinition {
     String offerPageProduct;
     TestContextSetup testContextSetup;
+    OfferPage offerPage;
 
-    public OfferPageStepDefinition(TestContextSetup testContextSetup) {
+    public OfferPageStepDefinition(TestContextSetup testContextSetup, OfferPage offerPage) {
         this.testContextSetup = testContextSetup;
+        this.offerPage = offerPage;
     }
 
     @Then("user searched for shortname {string} in offers page to check if product exist")
     public void userSearchedForSameShortnameInOffersPageToCheckIfProductExist(String shortname) {
-        testContextSetup.driver.get("https://rahulshettyacademy.com/seleniumPractise/#/offers");
-        testContextSetup.driver.findElement(By.id("search-field")).sendKeys(shortname);
-        offerPageProduct = testContextSetup.driver.findElements(
-                By.xpath("//table[@class='table table-bordered']//tr/td")).get(0).getText();
+        this.switchToOfferPage();
+        this.offerPage.searchItem(shortname);
+        offerPageProduct = this.offerPage.getProductName();
         assertTrue(offerPageProduct.startsWith(shortname));
+    }
+
+    public void switchToOfferPage() {
+        testContextSetup.driver.get("https://rahulshettyacademy.com/seleniumPractise/#/offers");
     }
 
     @Then("the product name at the offer page is the same in the landing page")
