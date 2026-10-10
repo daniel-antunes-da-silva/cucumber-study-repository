@@ -2,11 +2,11 @@ package pageObjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import utils.TestContextSetup;
 
 public class OfferPage {
     By search = By.id("search-field");
     By productName = By.xpath("//table[@class='table table-bordered']//tr/td");
+    private String offerPageProductName;
     WebDriver driver;
 
     public OfferPage(WebDriver driver) {
@@ -21,7 +21,12 @@ public class OfferPage {
         this.driver.findElement(search).getText();
     }
 
-    public String getProductName() {
-        return this.driver.findElement(productName).getText();
+    public void findProductName() {
+        this.offerPageProductName = this.driver.findElement(productName).getText();
     }
+
+    public String getProductName() {
+        return this.offerPageProductName;
+    }
+
 }

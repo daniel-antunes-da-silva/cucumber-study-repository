@@ -1,14 +1,7 @@
 package stepDefinitions;
 
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import pageObjects.LandingPage;
 import pageObjects.OfferPage;
-import pageObjects.PageObjectManager;
 import utils.TestContextSetup;
 
 
@@ -16,20 +9,22 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class OfferPageStepDefinition {
-    String offerPageProduct;
+    public String offerPageProduct;
     TestContextSetup testContextSetup;
-    OfferPage offerPage;
+    public String landingPageProduct;
 
-    public OfferPageStepDefinition(TestContextSetup testContextSetup, OfferPage offerPage) {
+    public OfferPageStepDefinition(TestContextSetup testContextSetup) {
         this.testContextSetup = testContextSetup;
-        this.offerPage = offerPage;
     }
 
     @Then("user searched for shortname {string} in offers page to check if product exist")
-    public void userSearchedForSameShortnameInOffersPageToCheckIfProductExist(String shortname) {
+    public void userSearchedForSameShortnameInOffersPageToCheckIfProductExist(String shortname) throws InterruptedException {
         this.switchToOfferPage();
-        this.offerPage.searchItem(shortname);
-        offerPageProduct = this.offerPage.getProductName();
+        OfferPage offerPage = this.testContextSetup.pageObjectManager.getOfferPage();
+        offerPage.searchItem(shortname);
+        Thread.sleep(2000);
+        offerPage.findProductName();
+        offerPageProduct = offerPage.getProductName();
         assertTrue(offerPageProduct.startsWith(shortname));
     }
 
@@ -39,6 +34,7 @@ public class OfferPageStepDefinition {
 
     @Then("the product name at the offer page is the same in the landing page")
     public void theProductNameAtTheOfferPageIsTheSameInTheLandingPage() {
-        assertEquals(this.testContextSetup.landingPageProduct, offerPageProduct);
+        this.landingPageProduct = this.testContextSetup.pageObjectManager.landingPage.getProductName().split("-")[0].trim();
+        assertEquals(landingPageProduct, offerPageProduct);
     }
 }

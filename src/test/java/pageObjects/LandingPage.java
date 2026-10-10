@@ -2,11 +2,11 @@ package pageObjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import utils.TestContextSetup;
 
 public class LandingPage {
     private final By search = By.xpath("//input[@type='search']");
     private final By productName = By.cssSelector("h4.product-name");
+    private String landingPageProductName;
     WebDriver driver;
 
     public LandingPage(WebDriver driver) {
@@ -21,7 +21,11 @@ public class LandingPage {
         this.driver.findElement(search).getText();
     }
 
+    public void findProductName() {
+        this.landingPageProductName = this.driver.findElements(productName).get(0).getText();
+    }
+
     public String getProductName() {
-        return this.driver.findElements(productName).get(0).getText();
+        return this.landingPageProductName;
     }
 }
