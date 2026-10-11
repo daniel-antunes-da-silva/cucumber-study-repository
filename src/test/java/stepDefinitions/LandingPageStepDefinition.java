@@ -2,6 +2,7 @@ package stepDefinitions;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
+import org.testng.Assert;
 import pageObjects.LandingPage;
 import pageObjects.PageObjectManager;
 import utils.TestContextSetup;
@@ -15,11 +16,12 @@ public class LandingPageStepDefinition {
 
     public LandingPageStepDefinition(TestContextSetup testContextSetup) {
         this.testContextSetup = testContextSetup;
+        this.landingPage = this.testContextSetup.pageObjectManager.getLandingPage();
     }
 
     @Given("User is on GreenCart Landing page")
     public void userIsOnGreenCartLandingPage() {
-        this.landingPage = this.testContextSetup.pageObjectManager.getLandingPage();
+        Assert.assertTrue(landingPage.getTitle().contains("GreenKart"));
     }
 
     @When("user searched with shortname {string} and extracted actual name of product")

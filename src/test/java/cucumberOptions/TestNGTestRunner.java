@@ -5,7 +5,7 @@ import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.DataProvider;
 
 @CucumberOptions(features = "src/test/java/features", glue = "stepDefinitions",
-        monochrome = true)
+        monochrome = true, tags = "@PlaceOrder")
 public class TestNGTestRunner extends AbstractTestNGCucumberTests {
 
     @Override
